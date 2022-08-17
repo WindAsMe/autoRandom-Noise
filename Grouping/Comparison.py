@@ -4,18 +4,49 @@ import geatpy as ea
 from DE import templet
 
 
+def CCDE(N):
+    groups = []
+    for i in range(N):
+        groups.append([i])
+    return groups
+
+
+def DECC_DG(N, f):
+    cost = 2
+    groups = CCDE(N) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
+    intercept = f(np.zeros(N))
+
+    for i in range(len(groups)-1):
+        if i < len(groups) - 1:
+            cost += 2
+            index1 = np.zeros(N)
+            index1[groups[i][0]] = 1
+            delta1 = f(index1) - intercept
+
+            for j in range(i+1, len(groups)):
+                cost += 2
+                if i < len(groups)-1 and j < len(groups) and not DG_Differential(N, groups[i][0], groups[j][0], delta1, f, intercept):
+                    groups[i].extend(groups.pop(j))
+                    j -= 1
+    return groups, cost
+
+
+def DG_Differential(Dim, e1, e2, a, func, intercept):
+    index1 = np.zeros(Dim)
+    index2 = np.zeros(Dim)
+    index1[e2] = 1
+    index2[e1] = 1
+    index2[e2] = 1
+
+    b = func(index1) * (1 + np.random.normal(loc=0, scale=0.01, size=None)) - intercept
+    c = func(index2) * (1 + np.random.normal(loc=0, scale=0.01, size=None)) - intercept
+
+    return np.abs(c - (a + b)) < 0.001
+
+
 def DECC_G(Dim, groups_num=10, max_number=100):
     return k_s(Dim, groups_num, max_number)
 
-
-def k_s(Dim, groups_num=20, max_number=50):
-    groups = []
-    groups_index = list(range(Dim))
-    random.shuffle(groups_index)
-    for i in range(groups_num):
-        group = groups_index[i * max_number: (i+1) * max_number]
-        groups.append(group)
-    return groups
 
 
 def DECC_D(Dim, func, scale_range, groups_num=20, max_number=50):
@@ -80,3 +111,48 @@ def MLCC(Dim):
     sizes = [5, 10, 25, 50]
     size = sizes[np.random.randint(0, len(sizes)-1)]
     return DECC_G(Dim, groups_num=int(size), max_number=int(Dim / size))
+
+
+def k_s(Dim, groups_num=20, max_number=50):
+    groups = []
+    groups_index = list(range(Dim))
+    random.shuffle(groups_index)
+    for i in range(groups_num):
+        group = groups_index[i * max_number: (i+1) * max_number]
+        groups.append(group)
+    return groups
+
+
+
+def CCVIL(Dim, func):
+    cost = 2
+    groups = CCDE(Dim)
+    f0 = func(np.zeros(Dim)) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
+
+    for i in range(len(groups) - 1):
+        if i < len(groups) - 1:
+            cost += 2
+            index1 = np.zeros(Dim)
+            index1[groups[i][0]] = 1
+            fi = func(index1) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
+
+            for j in range(i + 1, len(groups)):
+                cost += 2
+                if i < len(groups) - 1 and j < len(groups) and not Monotonicity_check(Dim, groups[i][0], groups[j][0], fi,
+                                                                                      func, f0):
+                    groups[i].extend(groups.pop(j))
+                    j -= 1
+    return groups, cost
+
+
+def Monotonicity_check(Dim, e1, e2, fi, func, f0):
+    index1 = np.zeros(Dim)
+    index2 = np.zeros(Dim)
+    index1[e2] = 1
+    index2[e1] = 1
+    index2[e2] = 1
+
+    fj = func(index1) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
+    fij = func(index2) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
+
+    return (fij > fj > f0 and fij > fi > f0) or (fij < fj < f0 and fij < fi < f0)

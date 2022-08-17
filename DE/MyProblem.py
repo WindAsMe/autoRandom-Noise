@@ -28,5 +28,5 @@ class CC_Problem(ea.Problem):
             temp_Phen[:, var] = pop.Phen[:, self.group.index(var)]
         result = []
         for p in temp_Phen:
-            result.append([self.benchmark(p)])
+            result.append([self.benchmark(p) * (1 + np.random.normal(loc=0, scale=0.01, size=None))])
         pop.ObjV = np.array(result)

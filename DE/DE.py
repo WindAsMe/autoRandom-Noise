@@ -118,7 +118,7 @@ def CC_Opt(benchmark, scale_range, group, context, Chrom, iteration):
 
     """===========================算法参数设置=========================="""
 
-    myAlgorithm = templet.soea_DE_best_1_L_templet(problem, population)
+    myAlgorithm = templet.soea_DE_rand_1_L_templet(problem, population)
     myAlgorithm.MAXGEN = iteration + 1
     myAlgorithm.drawing = 0
     """=====================调用算法模板进行种群进化====================="""

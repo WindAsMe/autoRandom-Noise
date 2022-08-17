@@ -117,7 +117,8 @@ def CC_Opt(benchmark, scale_range, group, context, Chrom, iteration):
     problem = MyProblem.CC_Problem(group, benchmark, scale_range, context)  # 实例化问题对象
 
     """===========================算法参数设置=========================="""
-    myAlgorithm = templet.soea_DE_currentToBest_1_L_templet(problem, population)
+
+    myAlgorithm = templet.soea_DE_best_1_L_templet(problem, population)
     myAlgorithm.MAXGEN = iteration + 1
     myAlgorithm.drawing = 0
     """=====================调用算法模板进行种群进化====================="""

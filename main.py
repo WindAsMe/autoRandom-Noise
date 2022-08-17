@@ -76,11 +76,9 @@ if __name__ == '__main__':
             write_obj(MLCC_obj_trace, MLCC_obj_path)
             print("    MLCC finish !")
 
-
             VIL_obj_trace = DE.CC(Dim, NIND, VIL_Max_iter, func, scale_range, VIL_groups)
             write_obj(VIL_obj_trace, VIL_obj_path)
             print("    VIL finish !")
-
 
             DG_obj_trace = DE.CC(Dim, NIND, DG_Max_iter, func, scale_range, DG_groups)
             write_obj(DG_obj_trace, DG_obj_path)

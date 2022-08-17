@@ -13,8 +13,8 @@ def CCDE(N):
 
 def DECC_DG(N, f):
     cost = 2
-    groups = CCDE(N) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
-    intercept = f(np.zeros(N))
+    groups = CCDE(N)
+    intercept = f(np.zeros(N)) * (1 + np.random.normal(loc=0, scale=0.01, size=None))
 
     for i in range(len(groups)-1):
         if i < len(groups) - 1:

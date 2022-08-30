@@ -95,7 +95,7 @@ def OptTool(Dim, NIND, f, scale_range):
     problem.aimFunc(population)
     """===========================算法参数设置=========================="""
     Initial_Chrom = population.Chrom
-    myAlgorithm = templet.soea_DE_currentToBest_1_L_templet(problem, population)
+    myAlgorithm = templet.soea_DE_rand_1_L_templet(problem, population)
     myAlgorithm.MAXGEN = 2
     myAlgorithm.drawing = 0
     """=====================调用算法模板进行种群进化====================="""

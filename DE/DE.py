@@ -56,7 +56,7 @@ def GCC(Dim, NIND, MAX_iteration, func, scale_range):
     Objs = []
 
     while real_iteration < MAX_iteration:
-        groups = Comparison.DECC_G(Dim, 5, 100)
+        groups = Comparison.DECC_G(Dim, int(Dim / 100), 100)
         for i in range(len(groups)):
             sub_chrom = subChrom(popChrom, groups[i])
             iteration = len(groups[i])

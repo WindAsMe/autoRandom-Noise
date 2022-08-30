@@ -35,7 +35,7 @@ if __name__ == '__main__':
     func_name = ["Rastrigin", "Rosenbrock", "Dixon_Price", "Ackley"]
     funcs = [Rastrigin, Rosenbrock, Dixon_Price, Ackley]
     scales = [[-5.12, 5.12], [-30, 30], [-10, 10], [-32.768, 32.768]]
-    for func_num in range(1, len(func_name)):
+    for func_num in range(2, len(func_name)):
 
         scale_range = scales[func_num]
         func = funcs[func_num]

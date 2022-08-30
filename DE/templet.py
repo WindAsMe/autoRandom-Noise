@@ -222,8 +222,9 @@ def Dis(C1, C2):
     dis = 0
     for i in range(len(C1)):
         dis += abs(C1[i] - C2[i])
+    if dis == 0:
+        dis = 10e-9
     return dis
-
 
 
 def centroid(F, X_c, chrom1, chrom2, scale_range):

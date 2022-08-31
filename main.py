@@ -28,7 +28,7 @@ if __name__ == '__main__':
     '''
     NIND = 50
     FEs = 750000
-    trail = 15
+    trail = 16
     '''
     Benchmark initialization
     '''
